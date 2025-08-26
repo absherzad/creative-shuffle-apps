@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H6QEXZ77WD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-H6QEXZ77WD');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Shuffle Apps</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+
+        .app-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .app-link {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            transition: background-color 0.3s, transform 0.2s;
+            cursor: pointer;
+        }
+
+        .app-link:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .app-link:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            .app-link {
+                font-size: 1rem;
+                padding: 10px 15px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            h1 {
+                font-size: 5vw;
+            }
+
+            p {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Creative Shuffle Apps</h1>
+        <p>Explore beginner-friendly JavaScript apps powered by the <code>shuffle</code> method!</p>
+        <div class="app-links">
+            <a href="quiz/index.html" class="app-link" data-app="quiz">Quiz App</a>
+            <a href="flashcards/index.html" class="app-link" data-app="flashcards">Flashcards App</a>
+			<a href="music/index.html" class="app-link" data-app="music">Music App</a>
+        </div>
+    </div>
+    <script>
+        // Add click feedback for better UX
+        document.querySelectorAll('.app-link').forEach(link => {
+            link.addEventListener('click', () => {
+                link.style.backgroundColor = '#004085';
+                setTimeout(() => {
+                    link.style.backgroundColor = '#007bff';
+                }, 200);
+            });
+        });
+    </script>
+</body>
+</html>

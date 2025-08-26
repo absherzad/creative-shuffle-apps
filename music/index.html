@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H6QEXZ77WD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-H6QEXZ77WD');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Song Playlist Shuffle App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar" aria-label="Playlist">
+            <h2>Playlist</h2>
+            <div id="songList" class="song-list"></div>
+        </div>
+        <div class="main-content">
+            <h1 class="app-title">🎵 Song Playlist Shuffle App</h1>
+            <button id="shuffleBtn" aria-label="Shuffle Playlist">Shuffle Playlist</button>
+            <div class="now-playing" aria-live="polite">
+                <h3>Now Playing</h3>
+                <p id="currentSong">No song playing</p>
+                <div class="player-controls">
+                    <button id="prevBtn" aria-label="Previous Song" tabindex="0">&laquo; Prev</button>
+                    <button id="nextBtn" aria-label="Next Song" tabindex="0">Next &raquo;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

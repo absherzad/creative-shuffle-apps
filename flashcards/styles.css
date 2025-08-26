@@ -1,0 +1,703 @@
+/* Define color variables for easier maintenance */
+:root {
+    --primary: #007bff;
+    --primary-light: #6ea8fe;
+    --success: #28a745;
+    --success-light: #6fdc8c;
+    --sidebar-bg: #fff;
+    --sidebar-border: #e3e6f0;
+    --shadow: 0 8px 32px rgba(0,0,0,0.08);
+    --shadow-light: 0 2px 12px rgba(0,0,0,0.04);
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: linear-gradient(135deg, #e0e7ff 0%, #f0f2f5 100%);
+    min-height: 100vh;
+    padding: 0;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+    background: rgba(255,255,255,0.8);
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    padding: 30px 10px 30px 10px;
+}
+
+h1 {
+    /* Fancy, professional, modern look */
+    color: #fff;
+    font-size: 2.4em;
+    margin-bottom: 32px;
+    letter-spacing: 1.2px;
+    font-weight: 900;
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4em;
+    padding: 0.3em 0.8em;
+    border-radius: 18px;
+    background: linear-gradient(90deg, #007bff 0%, #6ea8fe 100%);
+    box-shadow: 0 4px 24px 0 rgba(0,123,255,0.10), 0 1.5px 0 #fff;
+    text-shadow: 0 2px 12px rgba(0,123,255,0.13), 0 1px 0 #fff;
+    position: relative;
+    overflow: hidden;
+}
+h1::after {
+    content: "";
+    position: absolute;
+    left: 10%;
+    bottom: 0;
+    width: 80%;
+    height: 4px;
+    background: linear-gradient(90deg, #ffb347 0%, #007bff 100%);
+    border-radius: 2px;
+    opacity: 0.7;
+    pointer-events: none;
+}
+.emoji {
+    font-size: 1.5em;
+    vertical-align: middle;
+    margin-right: 0.15em;
+    filter: drop-shadow(0 2px 2px rgba(0,123,255,0.13));
+    transition: transform 0.2s;
+}
+h1:hover .emoji {
+    transform: scale(1.13) rotate(-8deg);
+}
+
+.app-grid {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 36px; /* Increased gap for more space between sidebar and main-content */
+    align-items: flex-start;
+    /* Sidebar left, main-content right */
+}
+
+.sidebar {
+    background-color: var(--sidebar-bg);
+    border-radius: 10px;
+    padding: 18px 12px 18px 18px;
+    height: fit-content;
+    border: 1.5px solid var(--sidebar-border);
+    min-height: 350px;
+    margin-bottom: 20px;
+    width: 260px;
+    min-width: 200px;
+    max-width: 320px;
+    flex-shrink: 0;
+    grid-column: 1;
+    box-shadow: var(--shadow-light);
+}
+
+.sidebar h2 {
+    font-size: 1.2em;
+    color: #333;
+    margin: 0 0 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #e3e6f0;
+    padding-bottom: 6px;
+}
+
+#flashcardList {
+    list-style: none;
+    padding: 0;
+    max-height: 500px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #007bff #f0f2f5;
+    text-align: left;
+}
+
+#flashcardList li {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, border 0.2s, box-shadow 0.2s;
+    font-size: 1em;
+    font-weight: 500;
+    border: 1px solid transparent;
+    text-align: left;
+    outline: none;
+}
+
+#flashcardList li:focus {
+    box-shadow: 0 0 0 2px var(--primary);
+    background-color: #e3f0ff;
+}
+
+#flashcardList li.active {
+    background: linear-gradient(90deg, var(--primary) 80%, var(--primary-light) 100%);
+    color: #fff;
+    border: 1.5px solid #0056b3;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(0,123,255,0.10);
+}
+
+#flashcardList li:hover {
+    background: #f0f8ff;
+    color: var(--primary);
+    box-shadow: 0 1px 4px rgba(0,123,255,0.06);
+}
+
+.main-content {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 350px;
+    justify-content: flex-start;
+    grid-column: 2;
+    border-right: none;
+    border-left: 1.5px solid #e3e6f0;
+    margin-left: 0;
+    padding-left: 32px;
+    padding-right: 0;
+}
+
+.card-container {
+    perspective: 1000px;
+    width: 100%;
+    max-width: 400px; /* Constrain flashcard width */
+    margin-bottom: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    max-width: 400px;
+    min-width: 220px;
+}
+
+.card-stack-bg {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 98%;
+    height: 96%;
+    border-radius: 16px;
+    background: rgba(200, 220, 255, 0.18);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.card-stack-bg.second {
+    top: 14px;
+    width: 94%;
+    height: 92%;
+    background: rgba(180, 200, 240, 0.13);
+    z-index: 0;
+}
+
+.flashcard {
+    width: 100%;
+    min-width: 200px;
+    max-width: 400px;
+    height: 150px; /* Reduced height to fit better */
+    min-height: 120px;
+    max-height: 220px;
+    position: relative;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: 
+        transform 0.6s cubic-bezier(.4,2,.3,1), 
+        box-shadow 0.3s, 
+        background 0.3s, 
+        border-color 0.3s;
+    will-change: transform;
+    background: rgba(255,255,255,0.95);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+    z-index: 2;
+}
+
+/* --- Improved stacked card effect for flashcard --- */
+.card-container {
+    position: relative;
+    /* Remove previous stack effect if present */
+}
+.card-stack-bg {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 98%;
+    height: 96%;
+    border-radius: 16px;
+    background: rgba(200, 220, 255, 0.18);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+    z-index: 1;
+    pointer-events: none;
+}
+.card-stack-bg.second {
+    top: 14px;
+    width: 94%;
+    height: 92%;
+    background: rgba(180, 200, 240, 0.13);
+    z-index: 0;
+}
+.flashcard {
+    z-index: 2;
+    position: relative;
+}
+
+.flashcard:hover, .flashcard:focus-visible {
+    box-shadow: 0 12px 36px rgba(0,123,255,0.13);
+    outline: 3px solid var(--primary-light);
+    outline-offset: 2px;
+}
+
+.flashcard:active {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transform: scale(0.98);
+}
+
+.flashcard.flipped {
+    transform: rotateY(180deg);
+    box-shadow: 0 8px 32px rgba(40,167,69,0.15);
+    border-color: var(--success);
+    background: rgba(40,167,69,0.04);
+}
+
+.front, .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    border-radius: 16px;
+    border: none;
+    font-size: 1.22em;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    user-select: none;
+    transition: font-size 0.2s;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.front {
+    background: linear-gradient(120deg, var(--primary) 80%, var(--primary-light) 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(0,123,255,0.08);
+}
+
+.back {
+    background: linear-gradient(120deg, var(--success) 80%, var(--success-light) 100%);
+    color: white;
+    transform: rotateY(180deg);
+    box-shadow: 0 2px 8px rgba(40,167,69,0.08);
+}
+
+.flashcard .hint {
+    font-size: 0.95em;
+    color: #f8f9fa;
+    opacity: 0.8;
+    margin-top: 10px;
+    font-style: italic;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    max-width: 400px; /* Align with flashcard width */
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px 0;
+    background: rgba(245, 247, 255, 0.85);
+    border: 1px solid #e3e6f0;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    font-size: 1.05em;
+    font-weight: 600;
+    min-width: 90px;
+    outline: none;
+    box-shadow: 0 2px 8px rgba(0,123,255,0.04);
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+button:focus {
+    outline: 2px solid #0056b3;
+    outline-offset: 2px;
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+button#shuffleBtn {
+    background: linear-gradient(90deg, #ffb347 60%, #ffcc80 100%);
+    color: #333;
+    font-weight: 700;
+    border: 1.5px solid #ffb347;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1.08em;
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+    box-shadow: 0 2px 8px rgba(255,179,71,0.10);
+    border-radius: 8px;
+    letter-spacing: 0.5px;
+}
+
+button#shuffleBtn:hover {
+    background: linear-gradient(90deg, #ff9800 60%, #ffd180 100%);
+    color: #fff;
+    border: 1.5px solid #ff9800;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+#cardCounter {
+    font-size: 1.1em;
+    color: #333;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    background: #f8fafc;
+    border: 1px solid #e3e6f0;
+    padding: 6px 14px;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+
+.shuffle-btn-row {
+    margin-top: 18px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.flashcard[data-tooltip]:hover::after,
+.flashcard[data-tooltip]:focus::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 50%;
+    top: -38px;
+    transform: translateX(-50%);
+    background: #222;
+    color: #fff;
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 0.98em;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0.95;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    transition: opacity 0.2s;
+}
+
+.flashcard[data-tooltip]:active::after {
+    display: none;
+}
+
+@media (max-width: 900px) {
+    .container {
+        padding: 10px 2vw 20px 2vw;
+    }
+    .app-grid {
+        grid-template-columns: 180px 1fr;
+        gap: 20px; /* Also increase gap on tablet */
+    }
+    .sidebar {
+        width: 180px;
+        min-width: 120px;
+        max-width: 200px;
+        padding: 10px 6px 10px 10px;
+    }
+    .main-content {
+        padding-left: 12px;
+        padding-right: 0;
+        border-left: 1.5px solid #e3e6f0;
+        border-right: none;
+    }
+    .card-container {
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 700px) {
+    h1 {
+        font-size: 1.25em;
+        gap: 0.12em;
+        margin-bottom: 16px;
+        letter-spacing: 0.3px;
+        padding: 0.25em 0.4em;
+        border-radius: 12px;
+    }
+    h1::after {
+        height: 2.5px;
+        left: 12%;
+        width: 76%;
+    }
+    .emoji {
+        font-size: 1.1em;
+        margin-right: 0.06em;
+    }
+    .app-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    .sidebar, .main-content {
+        grid-column: auto;
+    }
+    .main-content {
+        order: 1;
+        border-left: none;
+        padding-left: 0;
+    }
+    .sidebar {
+        order: 2;
+        max-width: 100%;
+        width: 100%;
+        min-width: 0;
+        margin-bottom: 0;
+        margin-top: 18px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        padding: 10px 6px 10px 10px;
+    }
+    .card-container {
+        max-width: 100vw;
+        min-width: 0;
+        min-height: 120px;
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: 0;
+        margin-right: 0;
+        box-sizing: border-box;
+        /* Add horizontal scroll prevention and centering */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .flashcard {
+        min-height: 140px;
+        height: 160px;
+        max-height: 220px;
+        min-width: 0;
+        max-width: 400px;
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        font-size: 1.1em;
+        box-sizing: border-box;
+    }
+    .front, .back {
+        font-size: 1em;
+        padding: 12px;
+    }
+    .controls {
+        max-width: 100%;
+        padding: 6px 0;
+    }
+    button {
+        padding: 7px 10px;
+        font-size: 0.95em;
+        min-width: 70px;
+    }
+    #cardCounter {
+        padding: 4px 8px;
+        font-size: 1em;
+    }
+    .progress-bar, .controls {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0;
+        box-shadow: none;
+        border-radius: 0;
+    }
+    .sidebar {
+        padding: 6px;
+        font-size: 0.95em;
+        margin-top: 12px;
+    }
+    .main-content {
+        padding: 6px;
+    }
+    .flashcard {
+        font-size: 0.95em;
+    }
+    .controls {
+        gap: 8px;
+    }
+    .front, .back {
+        font-size: 0.97em;
+        padding: 8px;
+    }
+    .progress-bar {
+        height: 5px;
+    }
+}
+
+/* Add a subtle fade-in animation for cards */
+@keyframes cardFadeIn {
+    from { opacity: 0; transform: scale(0.96);}
+    to { opacity: 1; transform: scale(1);}
+}
+.flashcard, .front, .back {
+    animation: cardFadeIn 0.5s;
+}
+
+/* --- Final Polish and Visual Improvements --- */
+
+/* Smoother card flip and shadow */
+.flashcard {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+    transition: 
+        transform 0.6s cubic-bezier(.4,2,.3,1), 
+        box-shadow 0.3s, 
+        background 0.3s, 
+        border-color 0.3s;
+    background: rgba(255,255,255,0.95);
+}
+.flashcard:hover, .flashcard:focus-visible {
+    box-shadow: 0 12px 36px rgba(0,123,255,0.13);
+    outline: 3px solid var(--primary-light);
+    outline-offset: 2px;
+}
+
+/* More contrast and clarity for the active sidebar item */
+#flashcardList li.active {
+    background: linear-gradient(90deg, var(--primary) 80%, var(--primary-light) 100%);
+    color: #fff;
+    border: 1.5px solid #0056b3;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(0,123,255,0.10);
+}
+
+/* Subtle hover for sidebar items */
+#flashcardList li:hover:not(.active) {
+    background: #f0f8ff;
+    color: var(--primary);
+    box-shadow: 0 1px 4px rgba(0,123,255,0.06);
+}
+
+/* Sidebar header style */
+.sidebar h2 {
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #e3e6f0;
+    padding-bottom: 6px;
+}
+
+/* Responsive font and padding for flashcard content */
+.front, .back {
+    font-size: 1.22em;
+    padding: 18px;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+/* Progress bar below the flashcard */
+.progress-bar {
+    width: 100%;
+    max-width: 400px;
+    height: 7px;
+    background: #e3e6f0;
+    border-radius: 5px;
+    margin: 18px auto 0 auto;
+    overflow: hidden;
+    position: relative;
+}
+.progress-bar-inner {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary) 60%, var(--primary-light) 100%);
+    border-radius: 5px 0 0 5px;
+    transition: width 0.4s cubic-bezier(.4,2,.3,1);
+}
+
+/* Shuffle button more prominent */
+button#shuffleBtn {
+    box-shadow: 0 2px 8px rgba(255,179,71,0.10);
+    border-radius: 8px;
+    letter-spacing: 0.5px;
+}
+
+/* Controls: more spacing and separation */
+.controls {
+    margin-bottom: 10px;
+    margin-top: 18px;
+    background: rgba(245,247,255,0.85);
+    border: 1px solid #e3e6f0;
+}
+
+/* Card counter: more visual clarity */
+#cardCounter {
+    background: #f8fafc;
+    border: 1px solid #e3e6f0;
+}
+
+/* Mobile: ensure flashcard is always fully visible and not cropped */
+@media (max-width: 700px) {
+    .card-container {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+    .flashcard {
+        max-width: 100%;
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .front, .back {
+        font-size: 1em;
+        padding: 12px;
+    }
+    .progress-bar, .controls {
+        max-width: 100%;
+    }
+}
+
+/* Even more compact for very small screens */
+@media (max-width: 480px) {
+    .front, .back {
+        font-size: 0.97em;
+        padding: 8px;
+    }
+    .progress-bar {
+        height: 5px;
+    }
+}

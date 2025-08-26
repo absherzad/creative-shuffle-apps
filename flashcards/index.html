@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H6QEXZ77WD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-H6QEXZ77WD');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShuffleCards (Memorize faster, retain longer.)</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>
+            <span class="emoji" aria-hidden="true">🎲</span>
+            Memorize faster, retain longer.
+        </h1>
+        <div class="app-grid">
+            <div class="sidebar">
+                <h2>Flashcards</h2>
+                <ul id="flashcardList" aria-label="List of flashcard questions"></ul>
+            </div>
+            <div class="main-content">
+                <div class="card-container">
+                    <div
+                        id="flashcard"
+                        class="flashcard"
+                        tabindex="0"
+                        aria-label="Flashcard. Press Enter or tap to flip."
+                        role="button"
+                        data-tooltip="Tap or press Enter/Space to flip the card"
+                    >
+                        <div class="front">Click to reveal the question</div>
+                        <div class="back">Answer will appear here</div>
+                    </div>
+                </div>
+                <div class="controls" role="group" aria-label="Flashcard navigation controls">
+                    <button id="prevBtn" disabled aria-label="Previous flashcard">Previous</button>
+                    <span id="cardCounter">1 / 20</span>
+                    <button id="nextBtn" aria-label="Next flashcard">Next</button>
+                </div>
+                <div class="shuffle-btn-row">
+                    <button id="shuffleBtn" aria-label="Shuffle flashcards">🔀 Shuffle Cards</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

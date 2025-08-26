@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H6QEXZ77WD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-H6QEXZ77WD');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Shuffle Quiz (Fair tests. Unique experiences)</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Shuffle & Learn</h1>
+        <div class="subtitle">Fair tests. Unique experiences!</div>
+        <div class="app-grid">
+            <div class="sidebar" id="sidebar">
+                <h2>Questions</h2>
+                <ul id="questionList"></ul>
+            </div>
+            <div class="main-content">
+                <div id="quiz">
+                    <h2 id="question">Question will appear here</h2>
+                    <div id="options"></div>
+                    <div class="controls">
+                        <button id="prevBtn" disabled>Previous</button>
+                        <span id="questionCounter">1 / 20</span>
+                        <div id="progressBar">
+                            <div id="progress"></div>
+                        </div>
+                        <button id="nextBtn" disabled>Next</button>
+                    </div>
+                </div>
+                <div class="shuffle-controls" id="shuffleControls">
+                    <button id="randomizeQuestions">Shuffle Questions</button>
+                    <button id="randomizeBoth">Shuffle Questions & Options</button>
+                </div>
+            </div>
+            <div id="result" class="hidden">
+                <h2>Your Results</h2>
+                <p id="score"></p>
+                <div id="feedback" aria-live="polite"></div>
+                <button id="reviewBtn">Review Incorrect Answers</button>
+                <div id="incorrectAnswers" class="hidden"></div>
+                <div class="result-controls">
+                    <button id="resetBtnResult">Reset Quiz</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
